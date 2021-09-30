@@ -12,8 +12,8 @@ Create application deployment called car-mart using kubeclt
 ### Taks 
 -	All objects should be in the ``` cars ``` namespace. This namespace already exists in the cluster.
 -	The deployment should be named ``` car-mart-deployment. ``` </span> 
--	The deployment should have <span style="color:yellow"> *3 replicas.* </span> 
--	The deployment's pods should have one container using the <span style="color:yellow"> *imagename* </span>  image with the tag <span style="color:yellow"> *tagnumber* </span>
+-	The deployment should have ``` 3 replicas. ``` 
+-	The deployment's pods should have one container using the ``` imagename```  image with the tag ``` tagnumber ``` </span>
 
 <details><summary> show me the solution</summary>
 
@@ -27,7 +27,7 @@ Create application deployment called car-mart using kubeclt
 
 #### Context 
 
-You are running an application called <span style="color:yellow"> *car-mart* </span>  app in Kubernetes. You have deployed the app as <span style="color:yellow"> *car-mart-deployment* </span>  in <span style="color:yellow"> *cars* </span> namespace. The deployment of <span style="color:yellow"> *car-mart* </span>  app done via kubectl. You don’t have backup so you boss ask you to persist the configuration. You need to export the <span style="color:yellow"> *car-mart* </span>  app deployment and associated configuration in <span style="color:yellow"> *yaml* </span> file. 
+You are running an application called ``` car-mart ``` app in Kubernetes. You have deployed the app as ``` car-mart-deployment ``` in ``` cars ``` namespace. The deployment of ``` car-mart ``` app done via kubectl. You don’t have backup so you boss ask you to persist the configuration. You need to export the ``` car-mart ```  app deployment and associated configuration in ``` yaml ``` file. 
 
 #### Taks
 -	Export car-mart configuration to yaml file
@@ -44,12 +44,12 @@ You are running an application called <span style="color:yellow"> *car-mart* </s
 
 #### Context 
 
-Deployment running application name called <span style="color:yellow"> *super-store* </span> in the <span style="color:yellow"> *apps* </span> namesspace.
+Deployment running application name called ``` super-store ``` in the ``` apps ``` namesspace.
 
 
 #### Taks
--	Expose a service for <span style="color:yellow"> *super-store* </span> deployment and allow external traffic communicate to web server. 
--	Expose the port to <span style="color:yellow"> *8080* </span> and name the servic to <span style="color:yellow"> *super-store-service* </span>
+-	Expose a service for ``` super-store ``` deployment and allow external traffic communicate to web server. 
+-	Expose the port to ``` 8080 ``` and name the servic to ``` super-store-service ```
 
 <details><summary>show me the solution </summary>
 
