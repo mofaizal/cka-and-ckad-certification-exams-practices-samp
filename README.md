@@ -10,8 +10,8 @@ Are you preparation for  CKA or CKAD certification exams, here is some of the pr
 Create application deployment called car-mart using kubeclt 
 
 ### Taks 
--	All objects should be in the <span style="color:yellow"> *cars* </span> namespace. This namespace already exists in the cluster.
--	The deployment should be named <span style="color:yellow"> *car-mart-deployment.* </span> 
+-	All objects should be in the ``` cars ``` namespace. This namespace already exists in the cluster.
+-	The deployment should be named ``` car-mart-deployment. ``` </span> 
 -	The deployment should have <span style="color:yellow"> *3 replicas.* </span> 
 -	The deployment's pods should have one container using the <span style="color:yellow"> *imagename* </span>  image with the tag <span style="color:yellow"> *tagnumber* </span>
 
