@@ -1,0 +1,27 @@
+kubectl create namespace cars
+
+kubectl create namespace cloud
+
+kubectl create namespace apps 
+
+kubectl create deployment --namespace apps super-store --image=nginx:1.21 --replicas=3
+
+echo -e "MY_ID=faizal\nMY_PWD=1234" > my-configmap.txt
+
+
+
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kgs='kubectl get service'
+alias kd='kubectl delete'
+alias kcf='kubectl create -f'
+alias kaf='kubectl apply -f'
+alias kgpa='kubectl get pods --all-namespaces'
+export yaml = '--dry-run=client -o yaml'
+
+vi ~/.vimrc
+sset number
+set tabstop=2
+set expandtab
+set shiftwidth=2
+set cursorline
