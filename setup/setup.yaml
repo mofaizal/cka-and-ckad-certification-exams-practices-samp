@@ -8,6 +8,19 @@ kubectl create deployment --namespace apps super-store --image=nginx:1.21 --repl
 
 echo -e "MY_ID=faizal\nMY_PWD=1234" > my-configmap.txt
 
+---
+apiVersion: v1
+kind: Pod
+namespace: cloud
+metadata:
+  name: sg-count
+spec:
+  containers:
+  - name: sg-count
+    image: busybox
+    args: [/bin/sh, -c,
+            'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
+---
 
 
 alias k='kubectl'

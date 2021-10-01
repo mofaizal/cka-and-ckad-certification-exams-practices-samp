@@ -3,7 +3,7 @@
 
 Are you preparation for  CKA or CKAD certification exams, here is some of the practices sample that you can practices. Please note that these question not similar to actual exams. This will help you to familiarize yourself as you will be required to demonstrate knowledge of each topic in order to pass the exam.
 
-### Practices Question #1 
+## Practices Question #1 
 
 ### Context 
 
@@ -23,7 +23,7 @@ kubectl create deployment --namespace cars car-mart-webapp --image=nginx:1.19 --
 </details>
 
 
-### Practices Question #2
+## Practices Question #2
 
 ### Context 
 
@@ -40,7 +40,7 @@ kubectl get deployment -n cars car-mart-webapp -o yaml > car-mart-webapp.yaml
 </details>
 
 
-### Practices Question #3
+## Practices Question #3
 
 ### Context 
 
@@ -69,7 +69,7 @@ kubectl run busybox-temp -n apps --image=busybox -it --rm --restart=Never -- wge
 
 </details>
 
-### Practices Question #4
+## Practices Question #4
 
 ### Context 
 
@@ -88,7 +88,7 @@ kubectl run -n cloud cloud-store --image=nginx:1.21
 </details>
 
 
-### Practices Question #5
+## Practices Question #5
 
 ### Context 
 
@@ -173,3 +173,85 @@ cat configmap-value.txt
 exit 
 ```
 </details>
+
+
+## Practices Question #6
+
+### Context 
+
+This deployment with YAML file, Create Pod with two container. 
+
+### Taks 
+-   The container one name is ``` web ``` uses the image ``` ngixn ``` 
+-   The container two name is ``` app ``` uses the image ``` busybox ``` 
+-   The POD should run on ``` web-app ``` namespace
+-   Find out the pod status and details 
+-   Print the error message into txt file ``` web-app-event.txt ```
+
+
+<details><summary> show me the solution</summary>
+
+First check is web-app namespace is there or not. if not Create web-app Namespace 
+
+```bash
+kubectl create namespace web-app
+```
+
+```bash
+kubectl --namespace  web-app run web-app --image=busybox --restart=Never -o yaml --dry-run > app.yaml
+
+```
+
+``` yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: web-app
+  name: web-app
+  namespace: web-app
+spec:
+  containers:
+  - image: ngixn
+    name: web
+  - image: busybox
+    name: app
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
+```
+
+```bash
+kubectl create -f app.yaml
+
+kubectl get pod -n web-app
+
+kubectl delete pod web-app1 -n web-app
+
+kubectl -n web-app get events  > web-app-event.txt
+
+```
+
+</details>
+
+
+## Practices Question #7
+
+### Context 
+
+You have running pod, called ``` sg-count ``` retrive the logs and store into file. 
+
+### Taks 
+-	You have ``` sg-count ``` pod runing on one of the namespace, find out which namespace.
+-	Retrieve the application logs from running pod and store in the file. ``` sg-count-log.txt ```   
+
+<details><summary> show me the solution</summary>
+
+```bash
+kubectl get pod -n ALL
+kubectl logs sg-count -n cloud > sg-count-log.txt
+```
+</details>
+
