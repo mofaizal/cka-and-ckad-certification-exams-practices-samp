@@ -4,7 +4,7 @@
 Are you preparation for  CKA or CKAD certification exams, here is some of the practices sample that you can practices. Please note that these question not similar to actual exams. This will help you to familiarize yourself as you will be required to demonstrate knowledge of each topic in order to pass the exam.
 
 
-Environment setup follow the below setup
+#### Environment setup follow the below setup
 
 ``` bash
 kubectl create namespace cars
@@ -18,7 +18,6 @@ kubectl create namespace sg-db
 kubectl create deployment --namespace apps super-store --image=nginx:1.21 --replicas=3
 
 echo -e "MY_ID=faizal\nMY_PWD=1234" > my-configmap.txt
-
 
 alias k='kubectl'
 alias kgp='kubectl get pods'e
@@ -50,7 +49,7 @@ Create application deployment called car-mart using kubeclt
 -	The deployment should have ``` 3 replicas. ``` 
 -	The deployment's pods should have one container using the ``` nginx ```  image with the tag ``` 1.19 ``` 
 
-<details><summary> *show me the solution* </summary>
+<details><summary> show me the solution </summary>
 
 ```bash
 kubectl create deployment --namespace cars car-mart-webapp --image=nginx:1.19 --replicas=3
@@ -67,7 +66,7 @@ You are running an application called ``` car-mart ``` app in Kubernetes. You ha
 ### Taks
 -	Export car-mart configuration to yaml file
 
-<details><summary> *show me the solution* </summary>
+<details><summary> show me the solution </summary>
 
 ```bash
 kubectl get deployment -n cars car-mart-webapp -o yaml > car-mart-webapp.yaml
@@ -86,7 +85,7 @@ You have running application name called ``` super-store ``` in the ``` apps ```
 -	Expose a service for ``` super-store ``` deployment and allow external traffic communicate to web server. 
 -	Expose the port to ``` 8080 ``` and name the servic to ``` super-store-service ```
 
-<details><summary>show me the solution </summary>
+<details><summary> show me the solution </summary>
 
 ```bash
 kubectl -n apps expose deployment super-store --port=8080 --target-port=80 --name=super-store-service
@@ -294,17 +293,64 @@ kubectl logs sg-count -n cloud > sg-count-log.txt
 
 ### Context 
 
-Create task to PersistentVolume, PersistentVolumeClaim and mount the volume to POD deployment. 
+You are task to do PersistentVolume, PersistentVolumeClaim and mount the volume to pod deployment. 
 
 ### Taks 
 
--   You need to create a PersistentVolume named ```sg-db-pv. ``` It should have a capacity of `` 10Mi ``, accessMode ``` ReadWriteOnce ```,   hostPath ``` /Volumes/Data `` and  storageClassName ``` auto ```.
+-   You need to create a PersistentVolume named ```sg-db-pv. ``` It should have a capacity of `` 100Mi ``, accessMode ``` ReadWriteOnce ```,   hostPath ``` /volumes/data `` and  storageClassName ``` auto ```.
 -   You need to create a new PersistentVolumeClaim in Namespace ``` sg-db ``` named ``` sg-db-pvc ```. It should request ``` 100Mi ``` storage, accessMode ``` ReadWriteOnce ``` and define a storageClassName ``` auto ```. Make sure that PVC should bound to the PV correctly.
 -   Create a new Deployment ``` sg-db-pod ``` in Namespace ``` sg-db ``` which mounts that volume at ``` /tmp/sg-data ```. The Pods of that Deployment should be of image ``` httpd:2.4.49-alpine ```.
 
 <details><summary> show me the solution</summary>
 
+For more details visit : https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume 
+
+Create PersistentVolume using Yaml 
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sg-db-pv
+  namespace: sg-db
+  labels:
+    type: local
+spec:
+  storageClassName: auto
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/volumes/data"
+```
 ```bash
+kubectl create -f pv.yaml
+kubectl get pv
+```
+
+``` yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sg-db-pvc
+  namespace: sg-db
+spec:
+  storageClassName: auto
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+```
+```bash
+kubectl create -f pvc.yaml
+kubectl get pvc -n sg-db
+```
+
+```yaml
+
 
 ```
+
 </details>
