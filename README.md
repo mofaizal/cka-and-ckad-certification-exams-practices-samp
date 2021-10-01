@@ -3,6 +3,41 @@
 
 Are you preparation for  CKA or CKAD certification exams, here is some of the practices sample that you can practices. Please note that these question not similar to actual exams. This will help you to familiarize yourself as you will be required to demonstrate knowledge of each topic in order to pass the exam.
 
+
+Environment setup follow the below setup
+
+``` bash
+kubectl create namespace cars
+
+kubectl create namespace cloud
+
+kubectl create namespace apps 
+
+kubectl create namespace sg-db 
+
+kubectl create deployment --namespace apps super-store --image=nginx:1.21 --replicas=3
+
+echo -e "MY_ID=faizal\nMY_PWD=1234" > my-configmap.txt
+
+
+alias k='kubectl'
+alias kgp='kubectl get pods'e
+alias kgs='kubectl get service'
+alias kd='kubectl delete'
+alias kcf='kubectl create -f'
+alias kaf='kubectl apply -f'
+alias kgpa='kubectl get pods --all-namespaces'
+export yaml = '--dry-run=client -o yaml'
+
+vi ~/.vimrc
+sset number
+set tabstop=2
+set expandtab
+set shiftwidth=2
+set cursorline
+
+kubectl create -f https://github.com/mofaizal/cka-and-ckad-certification-exams-practices-samp/blob/main/setup/setup.yaml
+``` 
 ## Practices Question #1 
 
 ### Context 
@@ -15,7 +50,7 @@ Create application deployment called car-mart using kubeclt
 -	The deployment should have ``` 3 replicas. ``` 
 -	The deployment's pods should have one container using the ``` nginx ```  image with the tag ``` 1.19 ``` 
 
-<details><summary> show me the solution</summary>
+<details><summary> *show me the solution* </summary>
 
 ```bash
 kubectl create deployment --namespace cars car-mart-webapp --image=nginx:1.19 --replicas=3
@@ -32,7 +67,7 @@ You are running an application called ``` car-mart ``` app in Kubernetes. You ha
 ### Taks
 -	Export car-mart configuration to yaml file
 
-<details><summary>show me the solution </summary>
+<details><summary> *show me the solution* </summary>
 
 ```bash
 kubectl get deployment -n cars car-mart-webapp -o yaml > car-mart-webapp.yaml
@@ -255,3 +290,21 @@ kubectl logs sg-count -n cloud > sg-count-log.txt
 ```
 </details>
 
+## Practices Question #8
+
+### Context 
+
+Create task to PersistentVolume, PersistentVolumeClaim and mount the volume to POD deployment. 
+
+### Taks 
+
+-   You need to create a PersistentVolume named ```sg-db-pv. ``` It should have a capacity of `` 10Mi ``, accessMode ``` ReadWriteOnce ```,   hostPath ``` /Volumes/Data `` and  storageClassName ``` auto ```.
+-   You need to create a new PersistentVolumeClaim in Namespace ``` sg-db ``` named ``` sg-db-pvc ```. It should request ``` 100Mi ``` storage, accessMode ``` ReadWriteOnce ``` and define a storageClassName ``` auto ```. Make sure that PVC should bound to the PV correctly.
+-   Create a new Deployment ``` sg-db-pod ``` in Namespace ``` sg-db ``` which mounts that volume at ``` /tmp/sg-data ```. The Pods of that Deployment should be of image ``` httpd:2.4.49-alpine ```.
+
+<details><summary> show me the solution</summary>
+
+```bash
+
+```
+</details>
