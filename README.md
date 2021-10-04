@@ -50,7 +50,7 @@ kubectl create deployment --namespace cars car-mart-webapp --image=nginx:1.19 --
 
 ### Context 
 
-You are running an application called ``` car-mart ``` app in Kubernetes. You have deployed the app as ``` car-mart-webapp ``` in ``` cars ``` namespace. The deployment of ``` car-mart ``` app done via kubectl. You don’t have backup so you boss ask you to persist the configuration. You need to export the ``` car-mart ```  app deployment and associated configuration in ``` yaml ``` file. 
+You are running an application called ``` car-mart ``` app in Kubernetes. You have deployed the app as ``` car-mart-webapp ``` in ``` cars ``` namespace. The deployment of ``` car-mart ``` app done via kubectl. You don’t have backup so you boss ask you to persist the configuration. You need to export the ``` car-mart ```  app deployment and associated configuration in ``` car-mart-webapp.yaml ``` file. 
 
 ### Taks
 -	Export car-mart configuration to yaml file
@@ -286,7 +286,7 @@ You are task to do PersistentVolume, PersistentVolumeClaim and mount the volume 
 
 ### Taks 
 
--   You need to create a PersistentVolume named ```sg-db-pv. ``` It should have a capacity of `` 100Mi ``, accessMode ``` ReadWriteOnce ```,   hostPath ``` /volumes/data `` and  storageClassName ``` auto ```.
+-   You need to create a PersistentVolume named ```sg-db-pv. ``` It should have a capacity of `` 100Mi ``, accessMode ``` ReadWriteOnce ```,   hostPath ``` /volumes/data ``` and  storageClassName ``` auto ```.
 -   You need to create a new PersistentVolumeClaim in Namespace ``` sg-db ``` named ``` sg-db-pvc ```. It should request ``` 100Mi ``` storage, accessMode ``` ReadWriteOnce ``` and define a storageClassName ``` auto ```. Make sure that PVC should bound to the PV correctly.
 -   Create a new Deployment ``` sg-db-pod ``` in Namespace ``` sg-db ``` which mounts that volume at ``` /tmp/sg-data ```. The Pods of that Deployment should be of image ``` httpd:2.4.49-alpine ```.
 
@@ -338,10 +338,26 @@ kubectl get pvc -n sg-db
 ```
 
 ```yaml
-
-
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sg-db-pod
+  namespace: sg-db
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: sg-db-pvc
+  containers:
+    - name: sg-db-pod
+      image: httpd:2.4.49-alpine
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/tmp/sg-data"
+          name: task-pv-storage
 ```
-
 </details>
 
 ## Practices Question #9
@@ -357,16 +373,63 @@ You need to perform Deployment and Rolling updates. Use yaml for deployment
 -	The deployment should have ``` 1 replicas. ``` 
 -	The deployment's pods should have one container using the ``` nginx ```  image with the tag ``` 1.16 ``` 
 -   Scale application to ``` 3 replicas ```
--   Check rollout history and export to file ``` web-history-log.txt ```  
 -   Web team come up new version and required you to perform upgrade the image name is  ``` nginx ```  image with the tag ``` 1.19 ``` 
+-   Check rollout history and export to file ``` web-history-log.txt ```
 -   Check rollout history and export
 -   Web team found that the new image having issue, the required you to rollback the deployment. Perform rollback.
 
 <details><summary> show me the solution</summary>
 
-```bash
-
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-update
+  namespace: web-update
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.16
 ```
+
+```bash
+kubectl edit deployment web-update -n web-update 
+```
+```bash
+kubectl rollout history deployment -n web-update
+```
+
+```bash
+kubectl rollout history deployment -n web-update > web-history-log.txt
+```
+
+```bash
+kubectl -n web-update set image deployment/web-update nginx=nginx:1.19
+```
+
+```bash
+kubectl describe deployment -n web-update web-update
+```
+
+```bash
+kubectl rollout history deployment -n web-update
+```
+
+```bash
+kubectl rollout undo deployment/web-update -n web-update
+```
+
 </details>
 
 
@@ -385,6 +448,7 @@ rm my-configmap.txt
 rm my-config-pod.yaml
 rm web-app-event.txt 
 rm web-history-log.txt
+rm car-mart-webapp.yaml 
 
 kubectl delete service super-store-service --namespace apps
 
