@@ -25,7 +25,7 @@ set expandtab
 set shiftwidth=2
 set cursorline
 
-kubectl create -f https://github.com/mofaizal/cka-and-ckad-certification-exams-practices-samp/blob/main/setup/setup.yaml
+kubectl apply -f https://raw.githubusercontent.com/mofaizal/cka-and-ckad-certification-exams-practices-samp/main/setup/setup.yaml
 ``` 
 ## Practices Question #1 
 
@@ -380,6 +380,8 @@ You need to perform Deployment and Rolling updates. Use yaml for deployment
 
 <details><summary> show me the solution</summary>
 
+Create deployment using yaml script 
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -402,10 +404,13 @@ spec:
       - name: nginx
         image: nginx:1.16
 ```
+edit the deployent and update the replicas 
 
 ```bash
 kubectl edit deployment web-update -n web-update 
 ```
+to view rollout history 
+
 ```bash
 kubectl rollout history deployment -n web-update
 ```
@@ -429,7 +434,6 @@ kubectl rollout history deployment -n web-update
 ```bash
 kubectl rollout undo deployment/web-update -n web-update
 ```
-
 </details>
 
 
