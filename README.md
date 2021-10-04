@@ -7,8 +7,6 @@ Are you preparation for  CKA or CKAD certification exams, here is some of the pr
 
 ``` bash
 
-kubectl create deployment --namespace apps super-store --image=nginx:1.21 --replicas=3
-
 echo -e "MY_ID=faizal\nMY_PWD=1234" > my-configmap.txt
 
 alias k='kubectl'

@@ -38,5 +38,32 @@ spec:
     args: [/bin/sh, -c,
             'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done']
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: super-store
+  name: super-store
+  namespace: apps
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: super-store
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: super-store
+    spec:
+      containers:
+      - image: nginx:1.21
+        name: nginx
+        resources: {}
+status: {}
+---
+
 
 
