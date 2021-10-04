@@ -3,17 +3,9 @@
 
 Are you preparation for  CKA or CKAD certification exams, here is some of the practices sample that you can practices. Please note that these question not similar to actual exams. This will help you to familiarize yourself as you will be required to demonstrate knowledge of each topic in order to pass the exam.
 
-
 #### Environment setup follow the below setup
 
 ``` bash
-kubectl create namespace cars
-
-kubectl create namespace cloud
-
-kubectl create namespace apps 
-
-kubectl create namespace sg-db 
 
 kubectl create deployment --namespace apps super-store --image=nginx:1.21 --replicas=3
 
@@ -41,12 +33,12 @@ kubectl create -f https://github.com/mofaizal/cka-and-ckad-certification-exams-p
 
 ### Context 
 
-Create application deployment called car-mart using kubeclt 
+Create application deployment called car-mart using kubectl 
 
 ### Taks 
 -	All objects should be in the ``` cars ``` namespace. This namespace already exists in the cluster.
 -	The deployment should be named ``` car-mart-webapp. ``` 
--	The deployment should have ``` 3 replicas. ``` 
+-	The deployment should have ``` 4 replicas. ``` 
 -	The deployment's pods should have one container using the ``` nginx ```  image with the tag ``` 1.19 ``` 
 
 <details><summary> show me the solution </summary>
@@ -55,7 +47,6 @@ Create application deployment called car-mart using kubeclt
 kubectl create deployment --namespace cars car-mart-webapp --image=nginx:1.19 --replicas=3
 ```
 </details>
-
 
 ## Practices Question #2
 
@@ -107,7 +98,7 @@ kubectl run busybox-temp -n apps --image=busybox -it --rm --restart=Never -- wge
 
 ### Context 
 
-Create application deployment called cloud-store using kubeclt 
+Create application deployment called cloud-store using kubectl 
 
 ### Taks 
 -	All objects should be in the ``` cloud ``` namespace. This namespace already exists in the cluster.
@@ -169,7 +160,7 @@ orginal file will look like below
  14   restartPolicy: Never
  15 status: {}
 ```
-Edit and add lines 12,13 and 14. The final YAML file should look similar to the following code snippet.
+Edit the yaml file and add lines 12,13 and 14. The final YAML file should look similar to the following code snippet.
 
 ```yaml
 apiVersion: v1
@@ -354,3 +345,77 @@ kubectl get pvc -n sg-db
 ```
 
 </details>
+
+## Practices Question #9
+
+### Context 
+
+You need to perform Deployment and Rolling updates. Use yaml for deployment
+
+### Taks
+
+-	Create deployment in  ``` web-update ``` namespace. This namespace already exists in the cluster.
+-	The deployment should be named ``` web-update. ``` 
+-	The deployment should have ``` 1 replicas. ``` 
+-	The deployment's pods should have one container using the ``` nginx ```  image with the tag ``` 1.16 ``` 
+-   Scale application to ``` 3 replicas ```
+-   Check rollout history and export to file ``` web-history-log.txt ```  
+-   Web team come up new version and required you to perform upgrade the image name is  ``` nginx ```  image with the tag ``` 1.19 ``` 
+-   Check rollout history and export
+-   Web team found that the new image having issue, the required you to rollback the deployment. Perform rollback.
+
+<details><summary> show me the solution</summary>
+
+```bash
+
+```
+</details>
+
+
+For CKA learn about Upgrading Kubernetes with Kubeadm, Implement Backup and Restore Methodologies
+
+### To clean up your practices environment run below commands
+
+```bash
+
+kubectl delete deployment --namespace apps super-store
+
+kubectl delete deployment --namespace cars car-mart-webapp
+
+rm car-mart-webapp.yaml
+rm my-configmap.txt
+rm my-config-pod.yaml
+rm web-app-event.txt 
+rm web-history-log.txt
+
+kubectl delete service super-store-service --namespace apps
+
+kubectl delete deployment --namespace cloud cloud-store
+
+kubectl delete configmap my-config
+
+kubectl delete pod my-pod 
+
+kubectl delete pod web-app --namespace web-app
+
+kubectl delete pod sg-count --namespace cloud
+
+kubectl delete pod sg-db-pod --namespace sg-db
+
+kubectl delete pvc sg-db-pvc -namespace sg-db
+
+kubectl delete deployment --namespace web-update web-update
+
+kubectl delete pv sg-db
+
+kubectl delete namespace cars
+
+kubectl delete namespace cloud
+
+kubectl delete namespace apps 
+
+kubectl delete namespace sg-db 
+
+kubectl delete namespace web-update
+
+```
